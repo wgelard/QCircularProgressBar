@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
 //    w.setForegroundColor(Qt::green);
 //    w.setTextColor(Qt::yellow);
 //    w.setBorderColor(Qt::darkCyan);
+    w.setFixedSize(200,200);
     w.show();
 
     return a.exec();

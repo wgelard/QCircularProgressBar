@@ -83,23 +83,19 @@ void QCircularProgressBar::paintEvent(QPaintEvent *event){
     // Set Antialisation
     painter.setRenderHint(QPainter::Antialiasing);
 
+    // Get the size of the widget
+    m_backgroundSize = this->size();
 
-    // If resizable allowed
-    if(m_resizable){
-        // Get the size of the widget
-        m_backgroundSize = this->size();
+    // Set the size of the circular progress bar
+    if(m_backgroundSize.width() < m_backgroundSize.height()){
+        m_size = m_backgroundSize.width() - MARGIN*2;
+    }else{
+        m_size = m_backgroundSize.height() - MARGIN*2;
+    }
 
-        // Set the size of the circular progress bar
-        if(m_backgroundSize.width() < m_backgroundSize.height()){
-            m_size = m_backgroundSize.width() - MARGIN*2;
-        }else{
-            m_size = m_backgroundSize.height() - MARGIN*2;
-        }
-
-        // Make sur the circular progress bar stay visible without a magnifying glass ;D
-        if(m_size < MIN_SIZE){
-            m_size = MIN_SIZE-MARGIN*2;
-        }
+    // Make sure the circular progress bar stay visible without a magnifying glass ;D
+    if(m_size < MIN_SIZE){
+        m_size = MIN_SIZE-MARGIN*2;
     }
 
     // Set background color
@@ -113,8 +109,6 @@ void QCircularProgressBar::paintEvent(QPaintEvent *event){
     painter.setPen(m_borderColor.lighter(157));
     painter.setBrush(m_backgroundProgressColor);
     painter.drawEllipse(QRectF(MARGIN,MARGIN,m_size,m_size));
-
-
 
 
     // Set the color of the circular progress bar
@@ -143,22 +137,30 @@ void QCircularProgressBar::paintEvent(QPaintEvent *event){
     painter.setPen(p);
     painter.setBrush(m_foregroundColor);
 
-    // I think 2/3 is the perfect ratio for
+    // I think 2/3 | 1/3 is a good ratio
     float ratio = (2./3.)*m_size;
-//    float ratio = 1.6180339887*m_size;
     painter.drawEllipse(QPointF((m_size/2.0)+MARGIN,(m_size/2)+MARGIN), ratio/2., ratio/2.);
 
     // Draw text in a rectangle
     QRectF rect = QRectF(((m_size-ratio)/2.)+MARGIN, ((m_size-(ratio/2.))/2.)+MARGIN, ratio, (ratio/2.));
 
+    // Set font
     QFont font;
     font.setPixelSize( rect.height()/2 );
     painter.setFont( font );
+
+    // Draw text
     painter.setPen(m_textColor);
     painter.drawText( rect, Qt::AlignCenter, QString("%1%").arg((m_value)) );
 }
 
-
+/**
+ * @brief QCircularProgressBar::setValue
+ * This method allows to set the value
+ * @param[in] value
+ * Min value = 0
+ * Max Value = 100
+ */
 void QCircularProgressBar::setValue(const int &value){
     m_value = value;
 
@@ -175,43 +177,73 @@ void QCircularProgressBar::setValue(const int &value){
 }
 
 
+/**
+ * @brief QCircularProgressBar::setProgressColor
+ * This method allows to set the color of the circular progress bar
+ * @param[in] color
+ */
 void QCircularProgressBar::setProgressColor(const QColor &color){
     m_progressColor = color;
     m_enableGradiant = false;
     this->repaint();
 }
 
+/**
+ * @brief QCircularProgressBar::setBacgroundProgressColor
+ * This method allows to set the color of the background of the circular progress bar
+ * @param[in] color
+ */
 void QCircularProgressBar::setBacgroundProgressColor(const QColor &color){
     m_backgroundProgressColor = color;
     this->repaint();
 }
 
+/**
+ * @brief QCircularProgressBar::setBackgrounColor
+ * This method allows to set the color of the background of the widget
+ * @param[in] color
+ */
 void QCircularProgressBar::setBackgrounColor(const QColor &color){
     m_backgroundColor = color;
     this->repaint();
 }
 
+/**
+ * @brief QCircularProgressBar::setForegroundColor
+ * This method allows to set the color of the foreground of the widget (text part)
+ * @param[in] color
+ */
 void QCircularProgressBar::setForegroundColor(const QColor &color){
     m_foregroundColor = color;
     this->repaint();
 }
 
+/**
+ * @brief QCircularProgressBar::setBorderColor
+ * This method allows to set the border color of the circular progress bar
+ * @param[in] color
+ */
 void QCircularProgressBar::setBorderColor(const QColor &color){
     m_borderColor = color;
     this->repaint();
 }
 
+/**
+ * @brief QCircularProgressBar::setTextColor
+ * This method allows to set the color of the text
+ * @param[in] color
+ */
 void QCircularProgressBar::setTextColor(const QColor &color){
     m_textColor = color;
     this->repaint();
 }
 
+/**
+ * @brief QCircularProgressBar::enableGradientColor
+ * This method allows to set the gradient color mode
+ * @param[in] enable
+ */
 void QCircularProgressBar::enableGradientColor(const bool &enable){
     m_enableGradiant = enable;
-    this->repaint();
-}
-
-void QCircularProgressBar::setResizable(const bool &resizable){
-    m_resizable = resizable;
     this->repaint();
 }

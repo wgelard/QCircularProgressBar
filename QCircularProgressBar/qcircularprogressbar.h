@@ -70,7 +70,6 @@ public:
     void setTextColor(const QColor &color);
 
     void enableGradientColor(const bool &enable);
-    void setResizable(const bool &resizable);
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -89,7 +88,6 @@ private:
     int m_startAngle;
     int m_spanAngle;
 
-    bool m_resizable;
     bool m_enableGradiant;
     QSize m_backgroundSize;
 
