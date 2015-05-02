@@ -12,7 +12,10 @@ TARGET = QCircularProgressBar
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        qcircularprogressbar.cpp
+SOURCES += example/example.cpp \
+    example/main.cpp \
+    source/QCircularProgressBar.cpp
 
-HEADERS  += qcircularprogressbar.h
+HEADERS  += \
+    example/example.h \
+    source/QCircularProgressBar.h

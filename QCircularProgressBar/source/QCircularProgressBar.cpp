@@ -1,47 +1,46 @@
-/**
- * @file qcircularprogressbar.cpp
- * @author  William Gelard <gelard.william@gmail.com>
- * @version 1.0
- * @date April 2015
- *
- * @section LICENSE
- *
- * The MIT License (MIT)
- *
- * Copyright (c) 2015 William Gelard
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- *
- * @section DESCRIPTION
- *
- * The QCircularProgressBar class is a custom Qt Widget that allows to creat
- * circular progress bar.
- */
+//!
+//! \file QCircularProgressBar.cpp
+//! \author  William Gelard <gelard.william@gmail.com>
+//! \version 1.0
+//! \date April 2015
+//!
+//! \section LICENSE
+//!
+//! The MIT License (MIT)
+//!
+//! Copyright (c) 2015 William Gelard
+//!
+//! Permission is hereby granted, free of charge, to any person obtaining a copy
+//! of this software and associated documentation files (the "Software"), to deal
+//! in the Software without restriction, including without limitation the rights
+//! to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//! copies of the Software, and to permit persons to whom the Software is
+//! furnished to do so, subject to the following conditions:
+//!
+//! The above copyright notice and this permission notice shall be included in all
+//! copies or substantial portions of the Software.
+//!
+//! THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//! IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//! FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//! AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//! LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//! OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//! SOFTWARE.
+//!
+//! \section DESCRIPTION
+//!
+//! The QCircularProgressBar class is a custom Qt Widget that allows to creat
+//! circular progress bar.
+//!
 #include "qcircularprogressbar.h"
 
-/**
- * @brief QCircularProgressBar::QCircularProgressBar
- * Construtor of the Class that initialize all the variables
- * and set the minimum size of the widget to the constant
- * value MIN_SIZE = 100
- * @param parent
- */
+//!
+//! \brief Construtor of the Class that initialize all the variables
+//! and set the minimum size of the widget to the constant
+//! value MIN_SIZE = 100
+//! \param parent
+//!
 QCircularProgressBar::QCircularProgressBar(QWidget *parent)
     : QWidget(parent),
       m_value(0),
@@ -57,7 +56,6 @@ QCircularProgressBar::QCircularProgressBar(QWidget *parent)
       m_startAngle(90*16),
       m_spanAngle(0),
 
-      m_resizable(true),
       m_enableGradiant(false),
 
       m_backgroundSize(this->size())
@@ -65,17 +63,15 @@ QCircularProgressBar::QCircularProgressBar(QWidget *parent)
     this->setMinimumSize(MIN_SIZE, MIN_SIZE);
 }
 
-/**
- * @brief QCircularProgressBar::~QCircularProgressBar
- * Destructor of the Class
- */
+//!
+//! \brief Destructor of the Class
+//!
 QCircularProgressBar::~QCircularProgressBar(){}
 
-/**
- * @brief QCircularProgressBar::paintEvent
- * Method that paint the widget
- * @param event
- */
+//!
+//! \brief Paint the widget
+//! \param event
+//!
 void QCircularProgressBar::paintEvent(QPaintEvent *event){
     // Creation of a painter
     QPainter painter(this);
@@ -104,8 +100,6 @@ void QCircularProgressBar::paintEvent(QPaintEvent *event){
     painter.drawRect(0,0,m_backgroundSize.width(), m_backgroundSize.height());
 
     // Draw the circular background
-    QColor m_borderColor = Qt::darkGray;
-
     painter.setPen(m_borderColor.lighter(157));
     painter.setBrush(m_backgroundProgressColor);
     painter.drawEllipse(QRectF(MARGIN,MARGIN,m_size,m_size));
@@ -154,13 +148,11 @@ void QCircularProgressBar::paintEvent(QPaintEvent *event){
     painter.drawText( rect, Qt::AlignCenter, QString("%1%").arg((m_value)) );
 }
 
-/**
- * @brief QCircularProgressBar::setValue
- * This method allows to set the value
- * @param[in] value
- * Min value = 0
- * Max Value = 100
- */
+//!
+//! \brief Set the value of the progress bar
+//! \param[in] value : The value of the progress bar
+//! (Min value = 0, Max Value = 100)
+//!
 void QCircularProgressBar::setValue(const int &value){
     m_value = value;
 
@@ -177,72 +169,65 @@ void QCircularProgressBar::setValue(const int &value){
 }
 
 
-/**
- * @brief QCircularProgressBar::setProgressColor
- * This method allows to set the color of the circular progress bar
- * @param[in] color
- */
+//!
+//! \brief Set the color of the circular progress bar
+//! \param[in] color : The color of the progress bar
+//!
 void QCircularProgressBar::setProgressColor(const QColor &color){
     m_progressColor = color;
     m_enableGradiant = false;
     this->repaint();
 }
 
-/**
- * @brief QCircularProgressBar::setBacgroundProgressColor
- * This method allows to set the color of the background of the circular progress bar
- * @param[in] color
- */
+//!
+//! \brief Set the color of the background of the circular progress bar
+//! \param[in] color : The color of the background of the progress bar
+//!
 void QCircularProgressBar::setBacgroundProgressColor(const QColor &color){
     m_backgroundProgressColor = color;
     this->repaint();
 }
 
-/**
- * @brief QCircularProgressBar::setBackgrounColor
- * This method allows to set the color of the background of the widget
- * @param[in] color
- */
+//!
+//! \brief Set the color of the background of the widget
+//! \param[in] color : : The color of the background of the widget
+//!
 void QCircularProgressBar::setBackgrounColor(const QColor &color){
     m_backgroundColor = color;
     this->repaint();
 }
 
-/**
- * @brief QCircularProgressBar::setForegroundColor
- * This method allows to set the color of the foreground of the widget (text part)
- * @param[in] color
- */
+//!
+//! \brief Set the color of the foreground of the widget (text part)
+//! \param[in] color : The color of the foreground
+//!
 void QCircularProgressBar::setForegroundColor(const QColor &color){
     m_foregroundColor = color;
     this->repaint();
 }
 
-/**
- * @brief QCircularProgressBar::setBorderColor
- * This method allows to set the border color of the circular progress bar
- * @param[in] color
- */
+//!
+//! \brief Set the border color of the circular progress bar
+//! \param[in] color : : The color of the border of the progress bar
+//!
 void QCircularProgressBar::setBorderColor(const QColor &color){
     m_borderColor = color;
     this->repaint();
 }
 
-/**
- * @brief QCircularProgressBar::setTextColor
- * This method allows to set the color of the text
- * @param[in] color
- */
+//!
+//! \brief Set the color of the text
+//! \param[in] color : : The color of the text
+//!
 void QCircularProgressBar::setTextColor(const QColor &color){
     m_textColor = color;
     this->repaint();
 }
 
-/**
- * @brief QCircularProgressBar::enableGradientColor
- * This method allows to set the gradient color mode
- * @param[in] enable
- */
+//!
+//! \brief Set the gradient color mode
+//! \param[in] enable : True for enabling grandient color mode, False otherwise
+//!
 void QCircularProgressBar::enableGradientColor(const bool &enable){
     m_enableGradiant = enable;
     this->repaint();
