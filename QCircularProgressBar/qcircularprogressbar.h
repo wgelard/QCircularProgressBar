@@ -1,32 +1,76 @@
 #ifndef QCIRCULARPROGRESSBAR_H
 #define QCIRCULARPROGRESSBAR_H
 
+/**
+ * @file qcircularprogressbar.h
+ * @author  William Gelard <gelard.william@gmail.com>
+ * @version 1.0
+ * @date April 2015
+ *
+ * @section LICENSE
+ *
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2015 William Gelard
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * @section DESCRIPTION
+ *
+ * The QCircularProgressBar class is a custom Qt Widget that allows to creat
+ * circular progress bar.
+ */
+
 #include <QWidget>
 #include <QPainter>
 #include <QColor>
 #include <QFont>
 
-#define MIN_SIZE 100
 #define MARGIN 5
+#define MIN_SIZE 100
+#define MIN_VALUE 0
+#define MAX_VALUE 100
 
-class QCircularProgressBar : public QWidget
-{
+
+/**
+ * @class QCircularProgressBar
+ * @brief The QCircularProgressBar class
+ * This class allows to creat a circular progress bar widget
+ */
+class QCircularProgressBar : public QWidget{
     Q_OBJECT
 
 public:
     QCircularProgressBar(QWidget *parent = 0);
     ~QCircularProgressBar();
 
-//    void setValue(int value);
+    void setValue(const int &value);
 
-//    void setSize(int size);
-//    void setColor(QColor color);
-//    void setBackgrounColor(QColor color);
-//    void setForegroundColor(QColor color);
-//    void setBorderColor(QColor color);
-//    void setTextColor(QColor color);
+    void setProgressColor(const QColor &color);
+    void setBacgroundProgressColor(const QColor &color);
+    void setBackgrounColor(const QColor &color);
+    void setForegroundColor(const QColor &color);
+    void setBorderColor(const QColor &color);
+    void setTextColor(const QColor &color);
 
-//    void enableGradientColor(bool enable);
+    void enableGradientColor(const bool &enable);
+    void setResizable(const bool &resizable);
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -35,7 +79,8 @@ private:
     int m_value;
 
     int m_size;
-    QColor m_color;
+    QColor m_progressColor;
+    QColor m_backgroundProgressColor;
     QColor m_backgroundColor;
     QColor m_foregroundColor;
     QColor m_borderColor;
@@ -45,10 +90,8 @@ private:
     int m_spanAngle;
 
     bool m_resizable;
-    bool m_enable;
+    bool m_enableGradiant;
     QSize m_backgroundSize;
-
-
 
 };
 
