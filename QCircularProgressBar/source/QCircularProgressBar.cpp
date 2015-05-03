@@ -51,12 +51,12 @@ QCircularProgressBar::QCircularProgressBar(QWidget *parent)
       m_backgroundColor(Qt::white),
       m_foregroundColor(Qt::white),
       m_borderColor(Qt::darkGray),
-      m_textColor(Qt::darkGray),
+      m_textColor(Qt::red),
 
       m_startAngle(90*16),
       m_spanAngle(0),
 
-      m_enableGradiant(false),
+      m_enableGradiant(true),
 
       m_backgroundSize(this->size())
 {

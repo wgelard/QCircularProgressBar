@@ -6,7 +6,6 @@ example::example() : QWidget(), m_val1(0), m_val2(0), m_val3(0){
 
     m_progress_1 = new QCircularProgressBar;
     m_progress_1->setFixedSize(150, 150);
-    m_progress_1->enableGradientColor(true);
 
     m_progress_2 = new QCircularProgressBar;
     m_progress_2->setFixedSize(100, 100);
