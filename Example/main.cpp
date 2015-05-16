@@ -1,12 +1,11 @@
 #include <QApplication>
-#include <QCircularProgressBar.h>
+#include "widgetexample.h"
 
 int main(int argc, char *argv[])
 {
   QApplication a(argc, argv);
-  QCircularProgressBar *cpb = new QCircularProgressBar();
-  cpb->setValue(75);
-  cpb->show();
+  WidgetExample we;
+  we.show();
 
   return a.exec();
 }

@@ -33,7 +33,8 @@
 //! The QCircularProgressBar class is a custom Qt Widget that allows to creat
 //! circular progress bar.
 //!
-#include "qcircularprogressbar.h"
+
+#include <include/QCircularProgressBar.h>
 
 //!
 //! \brief Construtor of the Class that initialize all the variables

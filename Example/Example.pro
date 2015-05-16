@@ -4,23 +4,24 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Example
 TEMPLATE = app
 
-DEPENDPATH += ../QCircularProgressBar/source
-INCLUDEPATH += ../QCircularProgressBar/source
+DEPENDPATH += ../QCircularProgressBar/include
+INCLUDEPATH += ../QCircularProgressBar/include
 
-CONFIG(debug, release) {
+CONFIG(debug, debug|release) {
     LIBS += -L../lib -lQCircularProgressBard
 }else{
     LIBS += -L../lib -lQCircularProgressBar
 }
 
+SOURCES += main.cpp \
+    widgetexample.cpp
 
-SOURCES += main.cpp
-
-HEADERS  +=
+HEADERS += \
+    widgetexample.h

@@ -20,10 +20,10 @@ CONFIG(debug, debug|release) {
 TEMPLATE = lib
 
 SOURCES += \
-    source/QCircularProgressBar.cpp
+    src/QCircularProgressBar.cpp
 
 HEADERS  += \
-    source/QCircularProgressBar.h
+    include/QCircularProgressBar.h
 
 DEFINES += QCIRCULARPROGRESSBAR_LIBRARY
 
