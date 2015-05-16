@@ -42,25 +42,25 @@
 //! \param parent
 //!
 QCircularProgressBar::QCircularProgressBar(QWidget *parent)
-    : QWidget(parent),
-      m_value(0),
+  : QWidget(parent),
+    m_value(0),
 
-      m_size(MIN_SIZE-MARGIN*2),
-      m_progressColor(Qt::darkGreen),
-      m_backgroundProgressColor(QColor(240, 240, 240)),
-      m_backgroundColor(Qt::white),
-      m_foregroundColor(Qt::white),
-      m_borderColor(Qt::darkGray),
-      m_textColor(Qt::red),
+    m_size(MIN_SIZE-MARGIN*2),
+    m_progressColor(Qt::darkGreen),
+    m_backgroundProgressColor(QColor(240, 240, 240)),
+    m_backgroundColor(Qt::white),
+    m_foregroundColor(Qt::white),
+    m_borderColor(Qt::darkGray),
+    m_textColor(Qt::red),
 
-      m_startAngle(90*16),
-      m_spanAngle(0),
+    m_startAngle(90*16),
+    m_spanAngle(0),
 
-      m_enableGradiant(true),
+    m_enableGradiant(true),
 
-      m_backgroundSize(this->size())
+    m_backgroundSize(this->size())
 {
-    this->setMinimumSize(MIN_SIZE, MIN_SIZE);
+  this->setMinimumSize(MIN_SIZE, MIN_SIZE);
 }
 
 //!
@@ -73,79 +73,81 @@ QCircularProgressBar::~QCircularProgressBar(){}
 //! \param event
 //!
 void QCircularProgressBar::paintEvent(QPaintEvent *event){
-    // Creation of a painter
-    QPainter painter(this);
+  Q_UNUSED(event);
 
-    // Set Antialisation
-    painter.setRenderHint(QPainter::Antialiasing);
+  // Creation of a painter
+  QPainter painter(this);
 
-    // Get the size of the widget
-    m_backgroundSize = this->size();
+  // Set Antialisation
+  painter.setRenderHint(QPainter::Antialiasing);
 
-    // Set the size of the circular progress bar
-    if(m_backgroundSize.width() < m_backgroundSize.height()){
-        m_size = m_backgroundSize.width() - MARGIN*2;
-    }else{
-        m_size = m_backgroundSize.height() - MARGIN*2;
-    }
+  // Get the size of the widget
+  m_backgroundSize = this->size();
 
-    // Make sure the circular progress bar stay visible without a magnifying glass ;D
-    if(m_size < MIN_SIZE){
-        m_size = MIN_SIZE-MARGIN*2;
-    }
+  // Set the size of the circular progress bar
+  if(m_backgroundSize.width() < m_backgroundSize.height()){
+    m_size = m_backgroundSize.width() - MARGIN*2;
+  }else{
+    m_size = m_backgroundSize.height() - MARGIN*2;
+  }
 
-    // Set background color
-    painter.setPen(Qt::NoPen);
-    painter.setBrush(m_backgroundColor);
-    painter.drawRect(0,0,m_backgroundSize.width(), m_backgroundSize.height());
+  // Make sure the circular progress bar stay visible without a magnifying glass ;D
+  if(m_size < MIN_SIZE){
+    m_size = MIN_SIZE-MARGIN*2;
+  }
 
-    // Draw the circular background
-    painter.setPen(m_borderColor.lighter(157));
-    painter.setBrush(m_backgroundProgressColor);
-    painter.drawEllipse(QRectF(MARGIN,MARGIN,m_size,m_size));
+  // Set background color
+  painter.setPen(Qt::NoPen);
+  painter.setBrush(m_backgroundColor);
+  painter.drawRect(0,0,m_backgroundSize.width(), m_backgroundSize.height());
+
+  // Draw the circular background
+  painter.setPen(m_borderColor.lighter(157));
+  painter.setBrush(m_backgroundProgressColor);
+  painter.drawEllipse(QRectF(MARGIN,MARGIN,m_size,m_size));
 
 
-    // Set the color of the circular progress bar
-    if(m_enableGradiant){
-        QConicalGradient cg(QPointF((m_size/2.0)+MARGIN,(m_size/2)+MARGIN),90);
-        cg.setColorAt(0.0, Qt::red);
-        cg.setColorAt(0.5, Qt::yellow);
-        cg.setColorAt(1.0, Qt::green);
-        painter.setBrush(cg);
-    }else{
-        painter.setBrush(m_progressColor);
-    }
+  // Set the color of the circular progress bar
+  if(m_enableGradiant){
+    QConicalGradient cg(QPointF((m_size/2.0)+MARGIN,(m_size/2)+MARGIN),90);
+    cg.setColorAt(0.0, Qt::red);
+    cg.setColorAt(0.5, Qt::yellow);
+    cg.setColorAt(1.0, Qt::green);
+    painter.setBrush(cg);
+  }else{
+    painter.setBrush(m_progressColor);
+  }
 
-    // Draw the progress bar
-    painter.setPen(Qt::NoPen);
-    painter.drawPie(QRectF(MARGIN, MARGIN, m_size, m_size).marginsRemoved(QMarginsF(1,1,1,1)), m_startAngle, -m_spanAngle);
+  // Draw the progress bar
+  painter.setPen(Qt::NoPen);
+  painter.drawPie(QRectF(MARGIN, MARGIN, m_size, m_size).marginsRemoved(QMarginsF(1,1,1,1)), m_startAngle, -m_spanAngle);
 
-    // Set the shadow effect of the foreground
-    QLinearGradient g(QPointF((m_size/2.)+MARGIN,0.),QPointF((m_size/2.)+MARGIN,(m_size/2.)+MARGIN));
-    g.setColorAt(0.0,Qt::transparent);
-    g.setColorAt(1.0,m_borderColor);
-    QPen p;
-    p.setBrush(g);
+  // Set the shadow effect of the foreground
+  QLinearGradient g(QPointF((m_size/2.)+MARGIN,0.),QPointF((m_size/2.)+MARGIN,(m_size/2.)+MARGIN));
+  g.setColorAt(0.0,Qt::transparent);
+  g.setColorAt(1.0,m_borderColor);
+  QPen p;
+  p.setBrush(g);
 
-    // Draw the foreground
-    painter.setPen(p);
-    painter.setBrush(m_foregroundColor);
+  // Draw the foreground
+  painter.setPen(p);
+  painter.setBrush(m_foregroundColor);
 
-    // I think 2/3 | 1/3 is a good ratio
-    float ratio = (2./3.)*m_size;
-    painter.drawEllipse(QPointF((m_size/2.0)+MARGIN,(m_size/2)+MARGIN), ratio/2., ratio/2.);
+  // I think 2/3 | 1/3 is a good ratio
+  float ratio = (2./3.)*m_size;
+  painter.drawEllipse(QPointF((m_size/2.0)+MARGIN,(m_size/2)+MARGIN), ratio/2., ratio/2.);
 
-    // Draw text in a rectangle
-    QRectF rect = QRectF(((m_size-ratio)/2.)+MARGIN, ((m_size-(ratio/2.))/2.)+MARGIN, ratio, (ratio/2.));
+  // Draw text in a rectangle
+  QRectF rect = QRectF(((m_size-ratio)/2.)+MARGIN, ((m_size-(ratio/2.))/2.)+MARGIN, ratio, (ratio/2.));
 
-    // Set font
-    QFont font;
-    font.setPixelSize( rect.height()/2 );
-    painter.setFont( font );
+  // Set font
+  QFont font;
+  font.setPixelSize( rect.height()/2 );
+  painter.setFont( font );
 
-    // Draw text
-    painter.setPen(m_textColor);
-    painter.drawText( rect, Qt::AlignCenter, QString("%1%").arg((m_value)) );
+  // Draw text
+  painter.setPen(m_textColor);
+  painter.drawText( rect, Qt::AlignCenter, QString("%1%").arg((m_value)) );
 }
 
 //!
@@ -154,29 +156,36 @@ void QCircularProgressBar::paintEvent(QPaintEvent *event){
 //! (Min value = 0, Max Value = 100)
 //!
 void QCircularProgressBar::setValue(const int &value){
-    m_value = value;
+  // Get the value
+  m_value = value;
 
-    if(m_value < MIN_VALUE){
-        m_value = MIN_VALUE;
-    }
+  // Verify MIN & MAX value
+  if(m_value < MIN_VALUE){
+    m_value = MIN_VALUE;
+  }
 
-    if(m_value > MAX_VALUE){
-        m_value = MAX_VALUE;
-    }
+  if(m_value > MAX_VALUE){
+    m_value = MAX_VALUE;
+  }
 
-    m_spanAngle = ((value*360.)/100.)*16;
-    this->repaint();
+  // Compute angle
+  m_spanAngle = ((value*360.)/100.)*16;
+
+  // Repaint the widget
+  this->repaint();
+
+  // Notify that the value has changed
+  emit(valueChange(m_value));
 }
-
 
 //!
 //! \brief Set the color of the circular progress bar
 //! \param[in] color : The color of the progress bar
 //!
 void QCircularProgressBar::setProgressColor(const QColor &color){
-    m_progressColor = color;
-    m_enableGradiant = false;
-    this->repaint();
+  m_progressColor = color;
+  m_enableGradiant = false;
+  this->repaint();
 }
 
 //!
@@ -184,8 +193,8 @@ void QCircularProgressBar::setProgressColor(const QColor &color){
 //! \param[in] color : The color of the background of the progress bar
 //!
 void QCircularProgressBar::setBacgroundProgressColor(const QColor &color){
-    m_backgroundProgressColor = color;
-    this->repaint();
+  m_backgroundProgressColor = color;
+  this->repaint();
 }
 
 //!
@@ -193,8 +202,8 @@ void QCircularProgressBar::setBacgroundProgressColor(const QColor &color){
 //! \param[in] color : : The color of the background of the widget
 //!
 void QCircularProgressBar::setBackgrounColor(const QColor &color){
-    m_backgroundColor = color;
-    this->repaint();
+  m_backgroundColor = color;
+  this->repaint();
 }
 
 //!
@@ -202,8 +211,8 @@ void QCircularProgressBar::setBackgrounColor(const QColor &color){
 //! \param[in] color : The color of the foreground
 //!
 void QCircularProgressBar::setForegroundColor(const QColor &color){
-    m_foregroundColor = color;
-    this->repaint();
+  m_foregroundColor = color;
+  this->repaint();
 }
 
 //!
@@ -211,8 +220,8 @@ void QCircularProgressBar::setForegroundColor(const QColor &color){
 //! \param[in] color : : The color of the border of the progress bar
 //!
 void QCircularProgressBar::setBorderColor(const QColor &color){
-    m_borderColor = color;
-    this->repaint();
+  m_borderColor = color;
+  this->repaint();
 }
 
 //!
@@ -220,8 +229,8 @@ void QCircularProgressBar::setBorderColor(const QColor &color){
 //! \param[in] color : : The color of the text
 //!
 void QCircularProgressBar::setTextColor(const QColor &color){
-    m_textColor = color;
-    this->repaint();
+  m_textColor = color;
+  this->repaint();
 }
 
 //!
@@ -229,6 +238,6 @@ void QCircularProgressBar::setTextColor(const QColor &color){
 //! \param[in] enable : True for enabling grandient color mode, False otherwise
 //!
 void QCircularProgressBar::enableGradientColor(const bool &enable){
-    m_enableGradiant = enable;
-    this->repaint();
+  m_enableGradiant = enable;
+  this->repaint();
 }

@@ -48,48 +48,60 @@
 #define MAX_VALUE 100   //!< MAX_VALUE Constant of the minimum value allowed (100%)
 
 
+// Generation of the DLL
+#if defined QCIRCULARPROGRESSBAR_LIBRARY
+#define QCIRCULARPROGRESSBAR_EXPORT Q_DECL_EXPORT
+#else
+#define QCIRCULARPROGRESSBAR_EXPORT Q_DECL_IMPORT
+#endif
+
+
 /**
  * @class QCircularProgressBar
  * @brief The QCircularProgressBar class
  * allows to create a circular progress bar widget
  */
-class QCircularProgressBar : public QWidget{
-    Q_OBJECT
+class QCIRCULARPROGRESSBAR_EXPORT QCircularProgressBar : public QWidget{
+  Q_OBJECT
 
 public:
-    QCircularProgressBar(QWidget *parent = 0);
-    ~QCircularProgressBar();
+  QCircularProgressBar(QWidget *parent = 0);
+  ~QCircularProgressBar();
 
-    void setValue(const int &value);
+  void setProgressColor(const QColor &color);
+  void setBacgroundProgressColor(const QColor &color);
+  void setBackgrounColor(const QColor &color);
+  void setForegroundColor(const QColor &color);
+  void setBorderColor(const QColor &color);
+  void setTextColor(const QColor &color);
 
-    void setProgressColor(const QColor &color);
-    void setBacgroundProgressColor(const QColor &color);
-    void setBackgrounColor(const QColor &color);
-    void setForegroundColor(const QColor &color);
-    void setBorderColor(const QColor &color);
-    void setTextColor(const QColor &color);
+  void enableGradientColor(const bool &enable);
 
-    void enableGradientColor(const bool &enable);
+public slots:
+  void setValue(const int &value);
+
+signals:
+  void valueChange(int value);
 
 protected:
-    void paintEvent(QPaintEvent *event);
+  virtual void paintEvent(QPaintEvent *event);
 
 private:
-    int m_value;
+  int m_value;
 
-    int m_size;
-    QColor m_progressColor;
-    QColor m_backgroundProgressColor;
-    QColor m_backgroundColor;
-    QColor m_foregroundColor;
-    QColor m_borderColor;
-    QColor m_textColor;
+  int m_size;
+  QColor m_progressColor;
+  QColor m_backgroundProgressColor;
+  QColor m_backgroundColor;
+  QColor m_foregroundColor;
+  QColor m_borderColor;
+  QColor m_textColor;
 
-    int m_startAngle;
-    int m_spanAngle;
+  int m_startAngle;
+  int m_spanAngle;
 
-    bool m_enableGradiant;
-    QSize m_backgroundSize;
+  bool m_enableGradiant;
+  QSize m_backgroundSize;
 
 };
 

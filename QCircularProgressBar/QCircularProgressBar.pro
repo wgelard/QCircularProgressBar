@@ -8,14 +8,23 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = QCircularProgressBar
-TEMPLATE = app
+CONFIG += debug_and_release
+CONFIG += build_all
 
+CONFIG(debug, debug|release) {
+    TARGET = QCircularProgressBard
+}else{
+    TARGET = QCircularProgressBar
+}
 
-SOURCES += example/example.cpp \
-    example/main.cpp \
+TEMPLATE = lib
+
+SOURCES += \
     source/QCircularProgressBar.cpp
 
 HEADERS  += \
-    example/example.h \
     source/QCircularProgressBar.h
+
+DEFINES += QCIRCULARPROGRESSBAR_LIBRARY
+
+DESTDIR = ../lib
