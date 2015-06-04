@@ -1,4 +1,4 @@
-Main Page {#mainpage}
+Main Page
 =========
 
 # QCircularProgressBar v1.0
