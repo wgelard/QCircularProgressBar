@@ -37,6 +37,7 @@
 //! circular progress bar.
 //!
 
+#include <QtCore/qglobal.h>
 #include <QWidget>
 #include <QPainter>
 #include <QColor>
@@ -56,11 +57,11 @@
 #endif
 
 
-/**
- * @class QCircularProgressBar
- * @brief The QCircularProgressBar class
- * allows to create a circular progress bar widget
- */
+//!
+//! \class QCircularProgressBar
+//! \brief The QCircularProgressBar class
+//! allows to create a circular progress bar widget
+//!
 class QCIRCULARPROGRESSBAR_EXPORT QCircularProgressBar : public QWidget{
   Q_OBJECT
 
@@ -81,7 +82,7 @@ public slots:
   void setValue(const int &value);
 
 signals:
-  void valueChange(int value);
+  void valueChange(const int &value);
 
 protected:
   virtual void paintEvent(QPaintEvent *event);

@@ -1,3 +1,6 @@
+Main Page {#mainpage}
+=========
+
 # QCircularProgressBar v1.0
 ----------------------------
 The **QCircularProgressBar** is a QtWidget developped in order to get a new style of QProgressBar, a circular progress bar.

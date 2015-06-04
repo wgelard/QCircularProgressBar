@@ -4,9 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT       += widgets
 
 CONFIG += debug_and_release
 CONFIG += build_all
@@ -28,3 +26,15 @@ HEADERS  += \
 DEFINES += QCIRCULARPROGRESSBAR_LIBRARY
 
 DESTDIR = ../lib
+
+
+#DEPENDPATH += ../../QCircularProgressBar/include
+#INCLUDEPATH += ../../QCircularProgressBar/include
+
+#CONFIG += release
+
+##CONFIG(debug, debug|release) {
+##    LIBS += -L../lib -lQCircularProgressBard
+##}else{
+#    LIBS += -L../../lib -lQCircularProgressBar
+##}
