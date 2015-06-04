@@ -6,3 +6,8 @@ build-QCircularProgressBar-Desktop_Qt_5_4_1_MinGW_32bit-Debug
 /build-Example-Desktop_Qt_5_4_1_MinGW_32bit-Debug
 /Example/Example.pro.user
 lib
+build-BasicExample-Desktop_Qt_5_4_1_MinGW_32bit-Release
+build-AdvanceExample-Desktop_Qt_5_4_1_MinGW_32bit-Debug
+build-AdvanceExample-Desktop_Qt_5_4_1_MinGW_32bit-Release
+build-BasicExample-Desktop_Qt_5_4_1_MinGW_32bit-Debug
+*.user

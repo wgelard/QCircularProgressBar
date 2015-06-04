@@ -22,25 +22,18 @@
 #    SOFTWARE.
 #---------------------------------------------------------------------------------------
 
-QT       += widgets
+QT       += core gui
 
-CONFIG += debug_and_release
-CONFIG += build_all
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG(debug, debug|release) {
-    TARGET = QCircularProgressBard
-}else{
-    TARGET = QCircularProgressBar
-}
+TARGET = BasicExample
+TEMPLATE = app
 
-TEMPLATE = lib
+DEPENDPATH += ../../QCircularProgressBar/include
+INCLUDEPATH += ../../QCircularProgressBar/include
 
-SOURCES += \
-    src/QCircularProgressBar.cpp
+CONFIG += release
 
-HEADERS  += \
-    include/QCircularProgressBar.h
+LIBS += -L../../lib -lQCircularProgressBar
 
-DEFINES += QCIRCULARPROGRESSBAR_LIBRARY
-
-DESTDIR = ../lib
+SOURCES += main.cpp
