@@ -15,7 +15,7 @@ Date   : April 2015
 
 
 ## Usage
-* All you have to do is to donwload QCircularProgressBar.h and QCircularProgressBar.cpp files, add them to your project and enjoy !
+* All you have to do is to donwload the library, compile it and enjoy ;p
 
 ```
 $ git clone http://192.168.0.31/Wiwi/Qt_CircularProgressBarWidget.git
@@ -26,7 +26,7 @@ $ git clone http://192.168.0.31/Wiwi/Qt_CircularProgressBarWidget.git
 
 ```cpp
 #include <QApplication>
-#include "QCircularProgressBar.h"
+#include <QCircularProgressBar.h>
 
 int main(int argc, char *argv[])
 {
@@ -65,7 +65,7 @@ This Widget is completly customizable and you can change all the color:
 
 ![alt text](screenshots/basic.PNG "A basic QProgessBar")
 
-* resizable QCircularProgressBar
+* Resizable QCircularProgressBar
 
 ![alt text](screenshots/resizable.PNG "A resizable QProgessBar")
 
