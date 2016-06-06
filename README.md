@@ -5,7 +5,7 @@ Continuous integration
 [ ![License] [license-image] ] [license]
 
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square
-[license]: https://github.com/Wiwi-31/QCircularProgressBar/blob/master/README.md
+[license]: http://192.168.0.31/Wiwi/Qt_CircularProgressBarWidget/blob/master/LICENSE
 
 
 Description
