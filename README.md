@@ -1,5 +1,15 @@
 # QCircularProgressBar v1.0
-----------------------------
+
+Continuous integration
+----------------------
+[ ![License] [license-image] ] [license]
+
+[license-image]: https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square
+[license]: https://github.com/Wiwi-31/QCircularProgressBar/blob/master/README.md
+
+
+Description
+-----------
 The **QCircularProgressBar** is a QtWidget developped in order to get a new style of QProgressBar, a circular progress bar inspired by [QtKnobs](https://github.com/ashish157/QtKnobs), Qt and QML based Library/Plugin which provides different types of Knobs.
 
 
