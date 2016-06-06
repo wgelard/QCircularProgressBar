@@ -1,9 +1,6 @@
-Main Page
-=========
-
 # QCircularProgressBar v1.0
 ----------------------------
-The **QCircularProgressBar** is a QtWidget developped in order to get a new style of QProgressBar, a circular progress bar.
+The **QCircularProgressBar** is a QtWidget developped in order to get a new style of QProgressBar, a circular progress bar inspired by [QtKnobs](https://github.com/ashish157/QtKnobs), Qt and QML based Library/Plugin which provides different types of Knobs.
 
 
 ## Current version
@@ -18,7 +15,7 @@ Date   : April 2015
 * All you have to do is to donwload the library, compile it and enjoy ;p
 
 ```
-$ git clone http://192.168.0.31/Wiwi/Qt_CircularProgressBarWidget.git
+$ git clone https://github.com/Wiwi-31/QCircularProgressBar.git
 ```
 
 ## Example Code
@@ -82,5 +79,6 @@ This Widget is completly customizable and you can change all the color:
 MIT
 
 ## Contact
-Feel free to contact me for any questions.
 * Email: gelard.william@gmail.com
+
+*Note:* ***Please use the GitHub issues*** *for questions and problems regarding the QCircularProgressBar project.* ***Do not write emails.***
