@@ -50,6 +50,7 @@ private:
   QTimer *m_timer_2;
   QTimer *m_timer_3;
 
+  bool m_up1, m_up2, m_up3;
   int m_val1, m_val2, m_val3;
 
 private slots:

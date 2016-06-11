@@ -24,7 +24,7 @@
 
 #include "customcircularprogressbar.h"
 
-CustomCircularProgressBar::CustomCircularProgressBar() : QWidget()//, m_val1(0), m_val2(0), m_val3(0)
+CustomCircularProgressBar::CustomCircularProgressBar() : QWidget(), m_val1(0), m_val2(0), m_val3(0)
 {
   m_layout = new QHBoxLayout;
 
@@ -60,6 +60,10 @@ CustomCircularProgressBar::CustomCircularProgressBar() : QWidget()//, m_val1(0),
   m_timer_2->start(100);
   m_timer_3->start(100);
 
+  m_up1 = true;
+  m_up2 = true;
+  m_up3 = true;
+
 }
 
 CustomCircularProgressBar::~CustomCircularProgressBar()
@@ -80,25 +84,43 @@ CustomCircularProgressBar::~CustomCircularProgressBar()
 }
 
 void CustomCircularProgressBar::updateProgress1(){
-    m_val1++;
-    if(m_val1 > 100)
-        m_val1 = 0;
+    if(m_up1){
+        m_val1++;
+        if(m_val1 >= 100)
+            m_up1 = false;
+    }else{
+        m_val1--;
+        if(m_val1 <= 0)
+            m_up1 = true;
+    }
 
     m_progress_1->setValue(m_val1);
 }
 
 void CustomCircularProgressBar::updateProgress2(){
-    m_val2++;
-    if(m_val2 > 100)
-        m_val2 = 0;
+    if(m_up2){
+        m_val2++;
+        if(m_val2 >= 100)
+            m_up2 = false;
+    }else{
+        m_val2--;
+        if(m_val2 <= 0)
+            m_up2 = true;
+    }
 
     m_progress_2->setValue(m_val2);
 }
 
 void CustomCircularProgressBar::updateProgress3(){
-    m_val3++;
-    if(m_val3 > 100)
-        m_val3 = 0;
+    if(m_up3){
+        m_val3++;
+        if(m_val3 >= 100)
+            m_up3 = false;
+    }else{
+        m_val3--;
+        if(m_val3 <= 0)
+            m_up3 = true;
+    }
 
     m_progress_3->setValue(m_val3);
 }
