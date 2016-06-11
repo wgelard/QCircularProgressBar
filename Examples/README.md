@@ -4,6 +4,7 @@
 ```
 $ cd <Example>
 $ mkdir build
+$ cd build
 $ qmake ..
 $ make
 $ ./<Example>
