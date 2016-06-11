@@ -3,3 +3,4 @@ lib
 *.user
 
 QCircularProgressBar-sharedLib
+QCircularProgressBar-sharedLib/*
