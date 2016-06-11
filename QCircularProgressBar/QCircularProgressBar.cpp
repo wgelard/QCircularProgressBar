@@ -34,7 +34,7 @@
 //! circular progress bar.
 //!
 
-#include "QCircularProgressBar.h"
+#include "../../QCircularProgressBar/QCircularProgressBar.h"
 
 //!
 //! \brief Construtor of the Class that initialize all the variables
