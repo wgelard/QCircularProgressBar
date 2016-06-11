@@ -42,9 +42,10 @@
 #include <QPainter>
 #include <QColor>
 #include <QFont>
+#include <QtMath>
 
 #define MARGIN 5        //!< MARGIN Constant of the widget
-#define MIN_SIZE 100    //!< MIN_SIZE Constant that define the minimum size of the widget
+#define MIN_SIZE 150    //!< MIN_SIZE Constant that define the minimum size of the widget
 #define MIN_VALUE 0     //!< MIN_VALUE Constant of the minimum value allowed (0%)
 #define MAX_VALUE 100   //!< MAX_VALUE Constant of the minimum value allowed (100%)
 
@@ -63,46 +64,64 @@
 //! allows to create a circular progress bar widget
 //!
 class QCIRCULARPROGRESSBAR_EXPORT QCircularProgressBar : public QWidget{
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  QCircularProgressBar(QWidget *parent = 0);
-  ~QCircularProgressBar();
+    enum type {pie, arc};
+    enum style {flat, round};
 
-  void setProgressColor(const QColor &color);
-  void setBacgroundProgressColor(const QColor &color);
-  void setBackgrounColor(const QColor &color);
-  void setForegroundColor(const QColor &color);
-  void setBorderColor(const QColor &color);
-  void setTextColor(const QColor &color);
+    QCircularProgressBar(QCircularProgressBar::type type = QCircularProgressBar::type::pie, QCircularProgressBar::style style = QCircularProgressBar::style::flat, QWidget *parent = 0);
+    ~QCircularProgressBar();
 
-  void enableGradientColor(const bool &enable);
+    void setProgressColor(const QColor &color);
+    void setBacgroundProgressColor(const QColor &color);
+    void setBackgrounColor(const QColor &color);
+    void setForegroundColor(const QColor &color);
+    void setBorderColor(const QColor &color);
+    void setTextColor(const QColor &color);
 
-public slots:
-  void setValue(const int &value);
-
-signals:
-  void valueChange(const int &value);
+    void enableGradientColor(const bool &enable);
 
 protected:
-  virtual void paintEvent(QPaintEvent *event);
+    virtual void paintEvent(QPaintEvent *event);
+
+public slots:
+    void setValue(const int &value);
+
+signals:
+    void valueChanged(const int &value);
 
 private:
-  int m_value;
+    type m_type;
+    style m_style;
 
-  int m_size;
-  QColor m_progressColor;
-  QColor m_backgroundProgressColor;
-  QColor m_backgroundColor;
-  QColor m_foregroundColor;
-  QColor m_borderColor;
-  QColor m_textColor;
+    float m_value;
 
-  int m_startAngle;
-  int m_spanAngle;
+    int m_size;
+    float m_ratio;
 
-  bool m_enableGradiant;
-  QSize m_backgroundSize;
+    QColor m_progressColor;
+    QColor m_backgroundProgressColor;
+    QColor m_backgroundColor;
+    QColor m_foregroundColor;
+    QColor m_borderColor;
+    QColor m_textColor;
+
+    int m_offsetAngle;
+    int m_startAngle;
+    int m_endAngle;
+    int m_spanAngle;
+    int m_fullSpanAngle;
+
+    bool m_enableGradiant;
+    QSize m_backgroundSize;
+
+    QPointF m_origin;
+    QPointF m_upperLeftCorner;
+
+    qreal m_x, m_y;
+
+    QPointF getPosition(qreal angle, qreal distance);
 
 };
 

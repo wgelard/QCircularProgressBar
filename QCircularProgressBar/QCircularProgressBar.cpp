@@ -42,26 +42,41 @@
 //! value MIN_SIZE = 100
 //! \param parent
 //!
-QCircularProgressBar::QCircularProgressBar(QWidget *parent)
-  : QWidget(parent),
-    m_value(0),
+QCircularProgressBar::QCircularProgressBar(QCircularProgressBar::type type, QCircularProgressBar::style style, QWidget *parent)
+    : QWidget(parent),
+      m_type(type),
+      m_style(style),
+      m_value(0.0),
 
-    m_size(MIN_SIZE-MARGIN*2),
-    m_progressColor(Qt::darkGreen),
-    m_backgroundProgressColor(QColor(240, 240, 240)),
-    m_backgroundColor(Qt::white),
-    m_foregroundColor(Qt::white),
-    m_borderColor(Qt::darkGray),
-    m_textColor(Qt::red),
+      m_size(MIN_SIZE-MARGIN*2),
+      m_progressColor(QColor("royalblue")),
+      m_backgroundProgressColor(QColor("#F0F0F0")),
+      m_backgroundColor(Qt::white),
+      m_foregroundColor(Qt::white),
+      m_borderColor(Qt::darkGray),
+      m_textColor(Qt::red),
 
-    m_startAngle(90*16),
-    m_spanAngle(0),
+      m_spanAngle(0),
 
-    m_enableGradiant(true),
+      m_enableGradiant(true),
 
-    m_backgroundSize(this->size())
+      m_backgroundSize(this->size())
 {
-  this->setMinimumSize(MIN_SIZE, MIN_SIZE);
+    this->setMinimumSize(MIN_SIZE, MIN_SIZE);
+
+    switch (m_type) {
+    case arc:
+        m_offsetAngle = 20;
+        m_startAngle = ((270-m_offsetAngle)*16);
+        m_fullSpanAngle = ((360-(m_offsetAngle*2))*16);
+        m_endAngle = (-(m_fullSpanAngle - m_startAngle));
+        break;
+
+    case pie:
+    default:
+        m_startAngle = (90*16);
+        break;
+    }
 }
 
 //!
@@ -74,81 +89,198 @@ QCircularProgressBar::~QCircularProgressBar(){}
 //! \param event
 //!
 void QCircularProgressBar::paintEvent(QPaintEvent *event){
-  Q_UNUSED(event);
+    Q_UNUSED(event);
 
-  // Creation of a painter
-  QPainter painter(this);
+    // Creation of a painter
+    QPainter painter(this);
 
-  // Set Antialisation
-  painter.setRenderHint(QPainter::Antialiasing);
+    // Set Antialisation
+    painter.setRenderHint(QPainter::Antialiasing);
 
-  // Get the size of the widget
-  m_backgroundSize = this->size();
+    // Get the size of the widget
+    m_backgroundSize = this->size();
 
-  // Set the size of the circular progress bar
-  if(m_backgroundSize.width() < m_backgroundSize.height()){
-    m_size = m_backgroundSize.width() - MARGIN*2;
-  }else{
-    m_size = m_backgroundSize.height() - MARGIN*2;
-  }
+    // Set the size of the circular progress bar
+    if(m_backgroundSize.width() < m_backgroundSize.height()){
+        m_size = m_backgroundSize.width() - MARGIN*2;
+    }else{
+        m_size = m_backgroundSize.height() - MARGIN*2;
+    }
 
-  // Make sure the circular progress bar stay visible without a magnifying glass ;D
-  if(m_size < MIN_SIZE){
-    m_size = MIN_SIZE-MARGIN*2;
-  }
+    // Make sure the circular progress bar stay visible without a magnifying glass ;D
+    if(m_size < MIN_SIZE){
+        m_size = MIN_SIZE-MARGIN*2;
+    }
 
-  // Set background color
-  painter.setPen(Qt::NoPen);
-  painter.setBrush(m_backgroundColor);
-  painter.drawRect(0,0,m_backgroundSize.width(), m_backgroundSize.height());
+    // Init arc type
+    if(m_type == type::arc){
+        m_origin.setX(m_backgroundSize.width()/2);
+        m_origin.setY(m_backgroundSize.height()/2);
 
-  // Draw the circular background
-  painter.setPen(m_borderColor.lighter(157));
-  painter.setBrush(m_backgroundProgressColor);
-  painter.drawEllipse(QRectF(MARGIN,MARGIN,m_size,m_size));
+        m_upperLeftCorner.setX(m_origin.x() - m_size/2);
+        m_upperLeftCorner.setY(m_origin.y() - m_size/2);
+    }
+
+    // Set background color
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(m_backgroundColor);
+    painter.drawRect(0,0,m_backgroundSize.width(), m_backgroundSize.height());
+
+    // Draw the circular background
+    painter.setPen(m_borderColor.lighter(157));
+    painter.setBrush(m_backgroundProgressColor);
+
+    QConicalGradient cg;
+    switch (m_type) {
+    case arc:
+        cg = QConicalGradient(m_origin,270);
+        painter.drawPie(QRectF(m_upperLeftCorner, QSize(m_size, m_size)), m_startAngle, -m_fullSpanAngle);
+        break;
+    case pie:
+    default:
+        cg = QConicalGradient(QPointF((m_size/2.0)+MARGIN,(m_size/2)+MARGIN),90);
+        painter.drawEllipse(QRectF(MARGIN,MARGIN,m_size,m_size));
+        break;
+    }
+
+    // Set the color of the circular progress bar
+    if(m_enableGradiant){
+        cg.setColorAt(0.0, Qt::red);
+        cg.setColorAt(0.5, Qt::yellow);
+        cg.setColorAt(1.0, Qt::green);
+        painter.setBrush(cg);
+    }else{
+        painter.setBrush(m_progressColor);
+    }
+
+    // Draw the progress bar
+    painter.setPen(Qt::NoPen);
+
+    switch (m_type) {
+    case arc:
+        painter.drawPie(QRectF(m_upperLeftCorner, QSize(m_size, m_size)).marginsRemoved(QMargins(1,1,1,1)), m_startAngle, -m_spanAngle);
+        painter.setPen(m_borderColor.lighter(157));
+        break;
+    case pie:
+    default:
+        painter.drawPie(QRectF(MARGIN, MARGIN, m_size, m_size).marginsRemoved(QMarginsF(1,1,1,1)), m_startAngle, -m_spanAngle);
+
+        // Set the shadow effect of the foreground
+        QLinearGradient g(QPointF((m_size/2.)+MARGIN,0.),QPointF((m_size/2.)+MARGIN,(m_size/2.)+MARGIN));
+        g.setColorAt(0.0,Qt::transparent);
+        g.setColorAt(1.0,m_borderColor);
+        QPen p;
+        p.setBrush(g);
+        painter.setPen(p);
+        break;
+    }
+
+    // Draw the foreground
+    painter.setBrush(m_foregroundColor);
+
+    switch (m_type) {
+    case arc:
+        m_ratio = (3./4.)*m_size;
+
+        painter.drawEllipse(m_origin, (int)(m_ratio/2.), (int)(m_ratio/2.));
+
+        // Erase the bottom of the foregroound
+        painter.setPen((Qt::NoPen));
+        painter.drawPie(QRectF(m_upperLeftCorner, QSize(m_size, m_size)), m_startAngle+2, (m_offsetAngle*2)*16 - 4);
+        break;
+    case pie:
+    default:
+        m_ratio = (2./3.)*m_size;
+        painter.drawEllipse(QPointF((m_size/2.0)+MARGIN,(m_size/2)+MARGIN), m_ratio/2., m_ratio/2.);
+        break;
+    }
+
+    switch (m_style) {
+    case round:
+        qreal ellispseRaduis = (m_size - m_ratio)/4;
+        qreal dist = (m_ratio/2 + ellispseRaduis) - 0.5;
+
+        // Draw first ellipse
+        painter.setPen(Qt::NoPen);
+        if(m_value == 0){
+          painter.setBrush(m_backgroundProgressColor);
+
+        }else{
+            if(m_enableGradiant){
+                painter.setBrush(cg);
+            }else{
+                painter.setBrush(m_progressColor);
+            }
+        }
+        QPointF pos = getPosition(qDegreesToRadians((float)m_startAngle/16.),  dist);
+        painter.drawEllipse(pos, ellispseRaduis, ellispseRaduis);
+        painter.setPen(m_borderColor.lighter(157));
+        painter.drawArc(QRectF(pos.x()-ellispseRaduis+0.5, pos.y()-ellispseRaduis+0.5, ellispseRaduis*2  - 1 ,2*ellispseRaduis  - 1) ,m_startAngle, 180*16);
 
 
-  // Set the color of the circular progress bar
-  if(m_enableGradiant){
-    QConicalGradient cg(QPointF((m_size/2.0)+MARGIN,(m_size/2)+MARGIN),90);
-    cg.setColorAt(0.0, Qt::red);
-    cg.setColorAt(0.5, Qt::yellow);
-    cg.setColorAt(1.0, Qt::green);
-    painter.setBrush(cg);
-  }else{
-    painter.setBrush(m_progressColor);
-  }
+        // Draw last ellipse
+        painter.setPen(Qt::NoPen);
+        if(m_value == 100){
+            if(m_enableGradiant){
+                painter.setBrush(cg);
+            }else{
+                painter.setBrush(m_progressColor);
+            }
+        }else{
+          painter.setBrush(m_backgroundProgressColor);
+        }
 
-  // Draw the progress bar
-  painter.setPen(Qt::NoPen);
-  painter.drawPie(QRectF(MARGIN, MARGIN, m_size, m_size).marginsRemoved(QMarginsF(1,1,1,1)), m_startAngle, -m_spanAngle);
+        pos = getPosition(qDegreesToRadians((float)m_endAngle/16.),  dist);
+        painter.drawEllipse(pos, ellispseRaduis, ellispseRaduis);
+        painter.setPen(m_borderColor.lighter(157));
+        painter.drawArc(QRectF(pos.x()-ellispseRaduis+0.5, pos.y()-ellispseRaduis+0.5, ellispseRaduis*2  - 1 ,2*ellispseRaduis  - 1) ,m_endAngle, -180*16);
 
-  // Set the shadow effect of the foreground
-  QLinearGradient g(QPointF((m_size/2.)+MARGIN,0.),QPointF((m_size/2.)+MARGIN,(m_size/2.)+MARGIN));
-  g.setColorAt(0.0,Qt::transparent);
-  g.setColorAt(1.0,m_borderColor);
-  QPen p;
-  p.setBrush(g);
 
-  // Draw the foreground
-  painter.setPen(p);
-  painter.setBrush(m_foregroundColor);
+        // Draw intermediare ellipse
+        if(m_value > 0 && m_value < 100){
+          int angle =(m_startAngle - m_spanAngle);
 
-  // I think 2/3 | 1/3 is a good ratio
-  float ratio = (2./3.)*m_size;
-  painter.drawEllipse(QPointF((m_size/2.0)+MARGIN,(m_size/2)+MARGIN), ratio/2., ratio/2.);
+          pos = getPosition(qDegreesToRadians((float)angle/16.),  dist);
 
-  // Draw text in a rectangle
-  QRectF rect = QRectF(((m_size-ratio)/2.)+MARGIN, ((m_size-(ratio/2.))/2.)+MARGIN, ratio, (ratio/2.));
+          painter.setPen(Qt::NoPen);
+          if(m_enableGradiant){
+              painter.setBrush(cg);
+          }else{
+              painter.setBrush(m_progressColor);
+          }
+          painter.drawEllipse(pos, ellispseRaduis, ellispseRaduis);
+        }
+        break;
 
-  // Set font
-  QFont font;
-  font.setPixelSize( rect.height()/2 );
-  painter.setFont( font );
+//    case flat:
+//    default:
+//        break;
+    }
 
-  // Draw text
-  painter.setPen(m_textColor);
-  painter.drawText( rect, Qt::AlignCenter, QString("%1%").arg((m_value)) );
+    // Draw text in a rectangle
+    QRectF rect;
+    switch (m_type) {
+    case arc:
+        m_x = m_origin.x() - m_ratio/2. + 2*MARGIN;
+        m_y = m_origin.y() - m_ratio/4.;
+
+        rect = QRectF(m_x, m_y, m_ratio-4*MARGIN, m_ratio/2.);
+
+        break;
+    case pie:
+    default:
+        rect = QRectF(((m_size-m_ratio)/2.)+MARGIN, ((m_size-(m_ratio/2.))/2.)+MARGIN, m_ratio, (m_ratio/2.));
+        break;
+    }
+
+    // Set font
+    QFont font;
+    font.setPixelSize( rect.height()/2.5);
+    painter.setFont( font );
+
+    // Draw text
+    painter.setPen(m_textColor);
+    painter.drawText( rect, Qt::AlignCenter, QString("%1%").arg(QString::number(m_value, 'f', 2)));
 }
 
 //!
@@ -157,26 +289,34 @@ void QCircularProgressBar::paintEvent(QPaintEvent *event){
 //! (Min value = 0, Max Value = 100)
 //!
 void QCircularProgressBar::setValue(const int &value){
-  // Get the value
-  m_value = value;
+    // Get the value
+    m_value = value;
 
-  // Verify MIN & MAX value
-  if(m_value < MIN_VALUE){
-    m_value = MIN_VALUE;
-  }
+    // Verify MIN & MAX value
+    if(m_value < MIN_VALUE){
+        m_value = MIN_VALUE;
+    }
 
-  if(m_value > MAX_VALUE){
-    m_value = MAX_VALUE;
-  }
+    if(m_value > MAX_VALUE){
+        m_value = MAX_VALUE;
+    }
 
-  // Compute angle
-  m_spanAngle = ((value*360.)/100.)*16;
+    // Compute angle
+    switch (m_type) {
+    case arc:
+        m_spanAngle = ((value*m_fullSpanAngle/16.)*16/100.);
+        break;
+    case pie:
+    default:
+        m_spanAngle = ((value*360.)/100.)*16;
+        break;
+    }
 
-  // Repaint the widget
-  this->repaint();
+    // Repaint the widget
+    this->repaint();
 
-  // Notify that the value has changed
-  emit(valueChange(m_value));
+    // Notify that the value has changed
+    emit(valueChanged(m_value));
 }
 
 //!
@@ -184,9 +324,9 @@ void QCircularProgressBar::setValue(const int &value){
 //! \param[in] color : The color of the progress bar
 //!
 void QCircularProgressBar::setProgressColor(const QColor &color){
-  m_progressColor = color;
-  m_enableGradiant = false;
-  this->repaint();
+    m_progressColor = color;
+    m_enableGradiant = false;
+    this->repaint();
 }
 
 //!
@@ -194,8 +334,8 @@ void QCircularProgressBar::setProgressColor(const QColor &color){
 //! \param[in] color : The color of the background of the progress bar
 //!
 void QCircularProgressBar::setBacgroundProgressColor(const QColor &color){
-  m_backgroundProgressColor = color;
-  this->repaint();
+    m_backgroundProgressColor = color;
+    this->repaint();
 }
 
 //!
@@ -203,8 +343,8 @@ void QCircularProgressBar::setBacgroundProgressColor(const QColor &color){
 //! \param[in] color : : The color of the background of the widget
 //!
 void QCircularProgressBar::setBackgrounColor(const QColor &color){
-  m_backgroundColor = color;
-  this->repaint();
+    m_backgroundColor = color;
+    this->repaint();
 }
 
 //!
@@ -212,8 +352,8 @@ void QCircularProgressBar::setBackgrounColor(const QColor &color){
 //! \param[in] color : The color of the foreground
 //!
 void QCircularProgressBar::setForegroundColor(const QColor &color){
-  m_foregroundColor = color;
-  this->repaint();
+    m_foregroundColor = color;
+    this->repaint();
 }
 
 //!
@@ -221,8 +361,8 @@ void QCircularProgressBar::setForegroundColor(const QColor &color){
 //! \param[in] color : : The color of the border of the progress bar
 //!
 void QCircularProgressBar::setBorderColor(const QColor &color){
-  m_borderColor = color;
-  this->repaint();
+    m_borderColor = color;
+    this->repaint();
 }
 
 //!
@@ -230,8 +370,8 @@ void QCircularProgressBar::setBorderColor(const QColor &color){
 //! \param[in] color : : The color of the text
 //!
 void QCircularProgressBar::setTextColor(const QColor &color){
-  m_textColor = color;
-  this->repaint();
+    m_textColor = color;
+    this->repaint();
 }
 
 //!
@@ -239,6 +379,15 @@ void QCircularProgressBar::setTextColor(const QColor &color){
 //! \param[in] enable : True for enabling grandient color mode, False otherwise
 //!
 void QCircularProgressBar::enableGradientColor(const bool &enable){
-  m_enableGradiant = enable;
-  this->repaint();
+    m_enableGradiant = enable;
+    this->repaint();
+}
+
+
+QPointF QCircularProgressBar::getPosition(qreal angle, qreal distance)
+{
+  qreal x = distance*qCos(angle) + m_origin.x();
+  qreal y = -distance*qSin(angle) + m_origin.y();
+
+  return QPointF(x,y);
 }
