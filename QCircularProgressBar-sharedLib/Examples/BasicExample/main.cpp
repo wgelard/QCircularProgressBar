@@ -29,14 +29,15 @@ int main(int argc, char *argv[])
 {
   QApplication a(argc, argv);
 
-  // Declare the widget
-  QCircularProgressBar cpb;
 
-  // Set a value
-  cpb.setValue(25);
+//  // Declare the widget
+//  QCircularProgressBar cpb;
 
-  // Show the widget
-  cpb.show();
+//  // Set a value
+//  cpb.setValue(25);
+
+//  // Show the widget
+//  cpb.show();
 
 
   return a.exec();

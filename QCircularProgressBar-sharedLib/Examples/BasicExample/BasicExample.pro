@@ -29,11 +29,15 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = BasicExample
 TEMPLATE = app
 
-DEPENDPATH += ../../QCircularProgressBar/include
-INCLUDEPATH += ../../QCircularProgressBar/include
+#DEPENDPATH += ../../QCircularProgressBar/include
+#INCLUDEPATH += ../../QCircularProgressBar/include
+
+DEPENDPATH += ../../src/
+INCLUDEPATH += ../../src/
 
 CONFIG += release
 
-LIBS += -L../../lib -lQCircularProgressBar
+LIBS += -L../../lib
+#LIBS += -L../../lib -lQCircularProgressBar
 
 SOURCES += main.cpp
