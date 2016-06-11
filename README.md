@@ -1,7 +1,5 @@
-# QCircularProgressBar v1.0
+# QCircularProgressBar
 
-Continuous integration
-----------------------
 [ ![License] [license-image] ] [license]
 
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square
