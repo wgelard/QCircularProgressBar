@@ -24,15 +24,17 @@
 
 #include "customcircularprogressbar.h"
 
-CustomCircularProgressBar::CustomCircularProgressBar() : QWidget(), m_val1(0), m_val2(0), m_val3(0)
+CustomCircularProgressBar::CustomCircularProgressBar() : QWidget(), m_val1(0)//, m_val2(0), m_val3(0)
 {
   m_layout = new QHBoxLayout;
 
-  m_progress_1 = new QCircularProgressBar;
+  m_progress_1 = new QCircularProgressBar(QCircularProgressBar::type::arc, QCircularProgressBar::style::round);
   m_progress_1->setFixedSize(150, 150);
 
-  m_progress_2 = new QCircularProgressBar;
+  m_progress_2 = new QCircularProgressBar(QCircularProgressBar::type::pie, QCircularProgressBar::style::round);
   m_progress_2->setFixedSize(100, 100);
+  m_progress_2->enableGradientColor(false);
+
 
   m_progress_3 = new QCircularProgressBar;
   m_progress_3->setBacgroundProgressColor(Qt::red);
@@ -49,20 +51,20 @@ CustomCircularProgressBar::CustomCircularProgressBar() : QWidget(), m_val1(0), m
   setLayout(m_layout);
 
   m_timer_1 = new QTimer;
-  m_timer_2 = new QTimer;
-  m_timer_3 = new QTimer;
+//  m_timer_2 = new QTimer;
+//  m_timer_3 = new QTimer;
 
   QObject::connect(m_timer_1, SIGNAL(timeout()), this, SLOT(updateProgress1()));
-  QObject::connect(m_timer_2, SIGNAL(timeout()), this, SLOT(updateProgress2()));
-  QObject::connect(m_timer_3, SIGNAL(timeout()), this, SLOT(updateProgress3()));
+//  QObject::connect(m_timer_2, SIGNAL(timeout()), this, SLOT(updateProgress2()));
+//  QObject::connect(m_timer_3, SIGNAL(timeout()), this, SLOT(updateProgress3()));
 
-  m_timer_1->start(100);
-  m_timer_2->start(100);
-  m_timer_3->start(100);
+  m_timer_1->start(10);
+//  m_timer_2->start(100);
+//  m_timer_3->start(100);
 
   m_up1 = true;
-  m_up2 = true;
-  m_up3 = true;
+//  m_up2 = true;
+//  m_up3 = true;
 
 }
 
@@ -74,53 +76,55 @@ CustomCircularProgressBar::~CustomCircularProgressBar()
 
   delete m_layout;
 
-  m_timer_1->stop();
+  m_timer_1->stop();/*
   m_timer_2->stop();
-  m_timer_3->stop();
+  m_timer_3->stop();*/
 
   delete m_timer_1;
-  delete m_timer_2;
-  delete m_timer_3;
+//  delete m_timer_2;
+//  delete m_timer_3;
 }
 
 void CustomCircularProgressBar::updateProgress1(){
     if(m_up1){
-        m_val1++;
+        m_val1+= 0.1;
         if(m_val1 >= 100)
             m_up1 = false;
     }else{
-        m_val1--;
+        m_val1-= 0.1;
         if(m_val1 <= 0)
             m_up1 = true;
     }
 
     m_progress_1->setValue(m_val1);
+    m_progress_2->setValue(m_val1);
+    m_progress_3->setValue(m_val1);
 }
 
-void CustomCircularProgressBar::updateProgress2(){
-    if(m_up2){
-        m_val2++;
-        if(m_val2 >= 100)
-            m_up2 = false;
-    }else{
-        m_val2--;
-        if(m_val2 <= 0)
-            m_up2 = true;
-    }
+//void CustomCircularProgressBar::updateProgress2(){
+//    if(m_up2){
+//        m_val2++;
+//        if(m_val2 >= 100)
+//            m_up2 = false;
+//    }else{
+//        m_val2--;
+//        if(m_val2 <= 0)
+//            m_up2 = true;
+//    }
 
-    m_progress_2->setValue(m_val2);
-}
+//    m_progress_2->setValue(m_val2);
+//}
 
-void CustomCircularProgressBar::updateProgress3(){
-    if(m_up3){
-        m_val3++;
-        if(m_val3 >= 100)
-            m_up3 = false;
-    }else{
-        m_val3--;
-        if(m_val3 <= 0)
-            m_up3 = true;
-    }
+//void CustomCircularProgressBar::updateProgress3(){
+//    if(m_up3){
+//        m_val3++;
+//        if(m_val3 >= 100)
+//            m_up3 = false;
+//    }else{
+//        m_val3--;
+//        if(m_val3 <= 0)
+//            m_up3 = true;
+//    }
 
-    m_progress_3->setValue(m_val3);
-}
+//    m_progress_3->setValue(m_val3);
+//}

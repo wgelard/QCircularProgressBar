@@ -33,11 +33,12 @@ int main(int argc, char *argv[]){
 //  QCircularProgressBar cpb(QCircularProgressBar::type::arc);
 //  QCircularProgressBar cpb(QCircularProgressBar::type::pie);
   QCircularProgressBar cpb(QCircularProgressBar::type::pie, QCircularProgressBar::style::round);
+//  QCircularProgressBar cpb;
 
   // Set a value
-  cpb.setValue(0);
+  cpb.setValue(100);
 
-//  cpb.enableGradientColor(false);
+  cpb.enableGradientColor(false);
 
   // Show the widget
   cpb.show();

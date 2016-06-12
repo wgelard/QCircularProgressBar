@@ -47,16 +47,16 @@ private:
   QCircularProgressBar *m_progress_3;
 
   QTimer *m_timer_1;
-  QTimer *m_timer_2;
-  QTimer *m_timer_3;
+//  QTimer *m_timer_2;
+//  QTimer *m_timer_3;
 
-  bool m_up1, m_up2, m_up3;
-  int m_val1, m_val2, m_val3;
+  bool m_up1;//, m_up2, m_up3;
+  float m_val1;//, m_val2, m_val3;
 
 private slots:
   void updateProgress1();
-  void updateProgress2();
-  void updateProgress3();
+//  void updateProgress2();
+//  void updateProgress3();
 };
 
 #endif // CUSTOMCIRCULARPROGRESSBAR_H

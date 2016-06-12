@@ -86,10 +86,10 @@ protected:
     virtual void paintEvent(QPaintEvent *event);
 
 public slots:
-    void setValue(const int &value);
+    void setValue(const float &value);
 
 signals:
-    void valueChanged(const int &value);
+    void valueChanged(const float &value);
 
 private:
     type m_type;
@@ -129,9 +129,8 @@ private:
     void drawArc(QPainter &painter);
     void drawText(QPainter &painter);
 
-    void drawRoundStyle(QPainter &painter);
-
-
+    void drawRoundArc(QPainter &painter);
+    void drawRoundPie(QPainter &painter);
 
     QPointF getPosition(qreal angle, qreal distance);
 
