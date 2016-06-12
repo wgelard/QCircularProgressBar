@@ -27,36 +27,42 @@
 
 #include <QWidget>
 #include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QLabel>
 #include <QTimer>
 
 #include "../../QCircularProgressBar/QCircularProgressBar.h"
 
-class CustomCircularProgressBar : public QWidget
-{
-  Q_OBJECT
+class CustomCircularProgressBar : public QWidget{
+    Q_OBJECT
 
 public:
-  CustomCircularProgressBar();
-  ~CustomCircularProgressBar();
+    CustomCircularProgressBar();
+    ~CustomCircularProgressBar();
 
 private:
-  QHBoxLayout *m_layout;
+    QVBoxLayout*m_layout;
+    QHBoxLayout *m_firstRow, *m_secondRow, *m_thirdRow;
 
-  QCircularProgressBar *m_progress_1;
-  QCircularProgressBar *m_progress_2;
-  QCircularProgressBar *m_progress_3;
+    QLabel *m_label1, *m_label2, *m_label3, *m_label4;
 
-  QTimer *m_timer_1;
-//  QTimer *m_timer_2;
-//  QTimer *m_timer_3;
+    QCircularProgressBar *m_progress_1;
+    QCircularProgressBar *m_progress_2;
+    QCircularProgressBar *m_progress_3;
+    QCircularProgressBar *m_progress_4;
 
-  bool m_up1;//, m_up2, m_up3;
-  float m_val1;//, m_val2, m_val3;
+    QCircularProgressBar *m_progress_5;
+    QCircularProgressBar *m_progress_6;
+    QCircularProgressBar *m_progress_7;
+    QCircularProgressBar *m_progress_8;
+
+    QTimer *m_timer;
+
+    bool m_up;
+    float m_val;
 
 private slots:
-  void updateProgress1();
-//  void updateProgress2();
-//  void updateProgress3();
+    void updateProgress();
 };
 
 #endif // CUSTOMCIRCULARPROGRESSBAR_H

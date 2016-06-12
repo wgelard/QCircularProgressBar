@@ -24,107 +24,136 @@
 
 #include "customcircularprogressbar.h"
 
-CustomCircularProgressBar::CustomCircularProgressBar() : QWidget(), m_val1(0)//, m_val2(0), m_val3(0)
-{
-  m_layout = new QHBoxLayout;
+CustomCircularProgressBar::CustomCircularProgressBar() : QWidget(), m_val(0){
+    m_layout = new QVBoxLayout;
 
-  m_progress_1 = new QCircularProgressBar(QCircularProgressBar::type::arc, QCircularProgressBar::style::round);
-  m_progress_1->setFixedSize(150, 150);
+    m_firstRow = new QHBoxLayout;
+    m_secondRow = new QHBoxLayout;
+    m_thirdRow = new QHBoxLayout;
 
-  m_progress_2 = new QCircularProgressBar(QCircularProgressBar::type::pie, QCircularProgressBar::style::round);
-  m_progress_2->setFixedSize(100, 100);
-  m_progress_2->enableGradientColor(false);
+    // ---------------------- Label ----------------------
+    m_label1 = new QLabel("Pie type - Flat style");
+    m_label2 = new QLabel("Pie type - Round style");
+    m_label3 = new QLabel("Arc type - Flat style");
+    m_label4 = new QLabel("Arc type - Round style");
+
+    // ---------- Default Circular Progress Bar ----------
+    // Default Circular Progress bar: Pie type, Flat style
+    m_progress_1 = new QCircularProgressBar();
+
+    // Pie type, Round style
+    m_progress_2 = new QCircularProgressBar(QCircularProgressBar::type::pie, QCircularProgressBar::style::round);
+
+    // Arc type, Flat style
+    m_progress_3 = new QCircularProgressBar(QCircularProgressBar::type::arc);
+
+    // Arc type, Round style
+    m_progress_4 = new QCircularProgressBar(QCircularProgressBar::type::arc, QCircularProgressBar::style::round);
 
 
-  m_progress_3 = new QCircularProgressBar;
-  m_progress_3->setBacgroundProgressColor(Qt::red);
-  m_progress_3->setProgressColor(Qt::green);
-  m_progress_3->setForegroundColor(Qt::blue);
-  m_progress_3->setTextColor(Qt::magenta);
-  m_progress_3->setBorderColor(Qt::darkBlue);
+    // ---------- Custom Circular Progress Bar ----------
+    // Default Circular Progress bar: Pie type, Flat style
+    m_progress_5 = new QCircularProgressBar();
+    // Disable gradient mode
+    m_progress_5->enableGradientColor(false);
 
-  m_layout->addWidget(m_progress_1,0,Qt::AlignTop);
-  m_layout->addWidget(m_progress_2,0,Qt::AlignTop);
-  m_layout->addWidget(m_progress_3);
+    // Pie type, Round style
+    m_progress_6 = new QCircularProgressBar(QCircularProgressBar::type::pie, QCircularProgressBar::style::round);
+    // Disable gradient mode and change de default color
+    m_progress_6->setProgressColor("#ffad60");
+    // Change border color
+    m_progress_6->setBorderColor("#eac086");
+    // Change forground color
+    m_progress_6->setForegroundColor("#ffcd94");
+    // Change background color
+    m_progress_6->setBackgrounColor("#dfe3ee");
+    // Change default text color
+    m_progress_6->setTextColor("#8b9dc3");
 
-  this->setStyleSheet("QWidget {background-color: white;}");
-  setLayout(m_layout);
+    // Arc type, Flat style
+    m_progress_7 = new QCircularProgressBar(QCircularProgressBar::type::arc);
+    // Disable gradient mode and change de default progress color
+    m_progress_7->setProgressColor("#009688");
+    // Change dafault background progress color
+    m_progress_7->setBacgroundProgressColor("#83d0c9");
+    // Change default text color
+    m_progress_7->setTextColor("#54b2a9");
 
-  m_timer_1 = new QTimer;
-//  m_timer_2 = new QTimer;
-//  m_timer_3 = new QTimer;
+    // Arc type, Round style
+    m_progress_8 = new QCircularProgressBar(QCircularProgressBar::type::arc, QCircularProgressBar::style::round);
+    // Disable gradient mode and change de default progress color
+    m_progress_8->setProgressColor("#35a79c");
+    // Change dafault background progress color
+    m_progress_8->setBacgroundProgressColor("#83d0c9");
+    // Disable gradient mode and change de default progress color
+    m_progress_8->setBackgrounColor("#009688"); // If arc type --> forground = background
+    //    m_progress_8->setForegroundColor("#009688"); // If arc type --> background = forground ==> idem
+    // Change default text color
+    m_progress_8->setTextColor("#54b2a9");
 
-  QObject::connect(m_timer_1, SIGNAL(timeout()), this, SLOT(updateProgress1()));
-//  QObject::connect(m_timer_2, SIGNAL(timeout()), this, SLOT(updateProgress2()));
-//  QObject::connect(m_timer_3, SIGNAL(timeout()), this, SLOT(updateProgress3()));
+    m_firstRow->addWidget(m_label1, 0, Qt::AlignHCenter);
+    m_firstRow->addWidget(m_label2, 0, Qt::AlignHCenter);
+    m_firstRow->addWidget(m_label3, 0, Qt::AlignHCenter);
+    m_firstRow->addWidget(m_label4, 0, Qt::AlignHCenter);
 
-  m_timer_1->start(10);
-//  m_timer_2->start(100);
-//  m_timer_3->start(100);
+    m_secondRow->addWidget(m_progress_1);
+    m_secondRow->addWidget(m_progress_2);
+    m_secondRow->addWidget(m_progress_3);
+    m_secondRow->addWidget(m_progress_4);
 
-  m_up1 = true;
-//  m_up2 = true;
-//  m_up3 = true;
+    m_thirdRow->addWidget(m_progress_5);
+    m_thirdRow->addWidget(m_progress_6);
+    m_thirdRow->addWidget(m_progress_7);
+    m_thirdRow->addWidget(m_progress_8);
 
+    m_layout->addLayout(m_firstRow,0);
+    m_layout->addLayout(m_secondRow,1);
+    m_layout->addLayout(m_thirdRow,1);
+
+    this->setStyleSheet("QWidget {background-color: white;}");
+    setLayout(m_layout);
+
+    m_timer = new QTimer;
+
+    QObject::connect(m_timer, SIGNAL(timeout()), this, SLOT(updateProgress()));
+
+    m_timer->start(10);
+
+    m_up = true;
 }
 
-CustomCircularProgressBar::~CustomCircularProgressBar()
-{
-  delete m_progress_1;
-  delete m_progress_2;
-  delete m_progress_3;
+CustomCircularProgressBar::~CustomCircularProgressBar(){
+    delete m_progress_1;
+    delete m_progress_2;
+    delete m_progress_3;
+    delete m_progress_4;
+    delete m_progress_5;
 
-  delete m_layout;
+    delete m_layout;
 
-  m_timer_1->stop();/*
-  m_timer_2->stop();
-  m_timer_3->stop();*/
+    m_timer->stop();
 
-  delete m_timer_1;
-//  delete m_timer_2;
-//  delete m_timer_3;
+    delete m_timer;
 }
 
-void CustomCircularProgressBar::updateProgress1(){
-    if(m_up1){
-        m_val1+= 0.1;
-        if(m_val1 >= 100)
-            m_up1 = false;
+void CustomCircularProgressBar::updateProgress(){
+    if(m_up){
+        m_val+= 0.1;
+        if(m_val >= 100)
+            m_up = false;
     }else{
-        m_val1-= 0.1;
-        if(m_val1 <= 0)
-            m_up1 = true;
+        m_val-= 0.1;
+        if(m_val <= 0)
+            m_up = true;
     }
 
-    m_progress_1->setValue(m_val1);
-    m_progress_2->setValue(m_val1);
-    m_progress_3->setValue(m_val1);
+    m_progress_1->setValue(m_val);
+    m_progress_2->setValue(m_val);
+    m_progress_3->setValue(m_val);
+    m_progress_4->setValue(m_val);
+
+    m_progress_5->setValue(m_val);
+    m_progress_6->setValue(m_val);
+    m_progress_7->setValue(m_val);
+    m_progress_8->setValue(m_val);
 }
-
-//void CustomCircularProgressBar::updateProgress2(){
-//    if(m_up2){
-//        m_val2++;
-//        if(m_val2 >= 100)
-//            m_up2 = false;
-//    }else{
-//        m_val2--;
-//        if(m_val2 <= 0)
-//            m_up2 = true;
-//    }
-
-//    m_progress_2->setValue(m_val2);
-//}
-
-//void CustomCircularProgressBar::updateProgress3(){
-//    if(m_up3){
-//        m_val3++;
-//        if(m_val3 >= 100)
-//            m_up3 = false;
-//    }else{
-//        m_val3--;
-//        if(m_val3 <= 0)
-//            m_up3 = true;
-//    }
-
-//    m_progress_3->setValue(m_val3);
-//}
