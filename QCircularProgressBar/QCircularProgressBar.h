@@ -121,6 +121,18 @@ private:
 
     qreal m_x, m_y;
 
+    QConicalGradient m_cg;
+
+
+    void initProgressBar(QPainter &painter);
+    void drawPie(QPainter &painter);
+    void drawArc(QPainter &painter);
+    void drawText(QPainter &painter);
+
+    void drawRoundStyle(QPainter &painter);
+
+
+
     QPointF getPosition(qreal angle, qreal distance);
 
 };

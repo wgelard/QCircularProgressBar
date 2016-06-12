@@ -29,12 +29,15 @@ int main(int argc, char *argv[]){
   QApplication a(argc, argv);
 
   // Declare the widget
-  QCircularProgressBar cpb(QCircularProgressBar::type::arc, QCircularProgressBar::style::round);
+//  QCircularProgressBar cpb(QCircularProgressBar::type::arc, QCircularProgressBar::style::round);
+//  QCircularProgressBar cpb(QCircularProgressBar::type::arc);
+//  QCircularProgressBar cpb(QCircularProgressBar::type::pie);
+  QCircularProgressBar cpb(QCircularProgressBar::type::pie, QCircularProgressBar::style::round);
 
   // Set a value
-  cpb.setValue(100);
+  cpb.setValue(0);
 
-  cpb.enableGradientColor(false);
+//  cpb.enableGradientColor(false);
 
   // Show the widget
   cpb.show();
