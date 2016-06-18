@@ -271,7 +271,7 @@ void QCircularProgressBar::initProgressBar(QPainter &painter){
 
 void QCircularProgressBar::drawPie(QPainter &painter){
 
-    painter.drawEllipse(QRectF(m_upperLeftCorner, QSize(m_size, m_size)));
+    painter.drawEllipse(QRectF(m_upperLeftCorner, QSizeF(m_size, m_size)));
     m_cg = QConicalGradient(m_origin,90);
     m_cg.setColorAt(0.0, Qt::red);
     m_cg.setColorAt(0.5, Qt::yellow);
@@ -304,7 +304,7 @@ void QCircularProgressBar::drawPie(QPainter &painter){
     // Draw the foreground
     painter.setBrush(m_foregroundColor);
 
-//    m_ratio = (2./3.)*m_size;
+    //    m_ratio = (2./3.)*m_size;
     m_ratio = (3./4.)*m_size;
     painter.drawEllipse(m_origin, (int)(m_ratio/2.), (int)(m_ratio/2.));
 
@@ -316,7 +316,7 @@ void QCircularProgressBar::drawPie(QPainter &painter){
 
 void QCircularProgressBar::drawArc(QPainter &painter){
 
-    painter.drawPie(QRectF(m_upperLeftCorner, QSize(m_size, m_size)), m_startAngle, -m_fullSpanAngle);
+    painter.drawPie(QRectF(m_upperLeftCorner, QSizeF(m_size, m_size)), m_startAngle, -m_fullSpanAngle);
 
     // Set the color of the circular progress bar
     m_cg = QConicalGradient(m_origin,270);
@@ -332,7 +332,6 @@ void QCircularProgressBar::drawArc(QPainter &painter){
 
     // Draw the progress bar
     painter.setPen(Qt::NoPen);
-
     painter.drawPie(QRectF(m_upperLeftCorner, QSize(m_size, m_size)).marginsRemoved(QMargins(1,1,1,1)), m_startAngle, -m_spanAngle);
     painter.setPen(m_borderColor.lighter(157));
 
@@ -340,7 +339,7 @@ void QCircularProgressBar::drawArc(QPainter &painter){
     painter.setBrush(m_foregroundColor);
 
     m_ratio = (3./4.)*m_size;
-    painter.drawEllipse(m_origin, (int)(m_ratio/2.), (int)(m_ratio/2.));
+    painter.drawEllipse(m_origin, (qreal)(m_ratio/2.), (qreal)(m_ratio/2.));
 
     // Erase the bottom of the foregroound
     painter.setPen((Qt::NoPen));
@@ -371,8 +370,8 @@ void QCircularProgressBar::drawText(QPainter &painter){
 }
 
 void QCircularProgressBar::drawRoundArc(QPainter &painter){
-    qreal ellispseRaduis = (m_size - m_ratio)/4;
-    qreal dist = (m_ratio/2 + ellispseRaduis) - 0.5;
+    qreal ellispseRaduis = (m_size - m_ratio)/4.;
+    qreal dist = (m_ratio/2 + ellispseRaduis);
 
     // Draw first ellipse
     painter.setPen(Qt::NoPen);
@@ -389,7 +388,7 @@ void QCircularProgressBar::drawRoundArc(QPainter &painter){
     QPointF pos = getPosition(qDegreesToRadians((float)m_startAngle/16.),  dist);
     painter.drawEllipse(pos, ellispseRaduis, ellispseRaduis);
     painter.setPen(m_borderColor.lighter(157));
-    painter.drawArc(QRectF(pos.x()-ellispseRaduis+0.5, pos.y()-ellispseRaduis+0.5, ellispseRaduis*2  - 1 ,2*ellispseRaduis  - 1) ,m_startAngle, 180*16);
+    painter.drawArc(QRectF(pos.x()-ellispseRaduis, pos.y()-ellispseRaduis, ellispseRaduis*2,2*ellispseRaduis) ,m_startAngle, 180*16);
 
     // Draw last ellipse
     painter.setPen(Qt::NoPen);
@@ -406,7 +405,7 @@ void QCircularProgressBar::drawRoundArc(QPainter &painter){
     pos = getPosition(qDegreesToRadians((float)m_endAngle/16.),  dist);
     painter.drawEllipse(pos, ellispseRaduis, ellispseRaduis);
     painter.setPen(m_borderColor.lighter(157));
-    painter.drawArc(QRectF(pos.x()-ellispseRaduis+0.5, pos.y()-ellispseRaduis+0.5, ellispseRaduis*2  - 1 ,2*ellispseRaduis  - 1) ,m_endAngle, -180*16);
+    painter.drawArc(QRectF(pos.x()-ellispseRaduis, pos.y()-ellispseRaduis, ellispseRaduis*2, 2*ellispseRaduis) ,m_endAngle, -180*16);
 
     // Draw intermediare ellipse
     if(m_value > 0 && m_value < 100){
@@ -425,9 +424,8 @@ void QCircularProgressBar::drawRoundArc(QPainter &painter){
 }
 
 void QCircularProgressBar::drawRoundPie(QPainter &painter){
-    qreal ellispseRaduis = (m_size - m_ratio)/4;
-    qreal dist = (m_ratio/2 + ellispseRaduis) - 0.5;
-
+    qreal ellispseRaduis = (m_size - m_ratio)/4.;
+    qreal dist = (m_ratio/2 + ellispseRaduis) - 1.;
     QPointF pos;
 
     // Draw last ellipse
