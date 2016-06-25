@@ -26,12 +26,6 @@ Include the files from QCircularProgressBar folder into your project:
 * As a shared library (todo)
 
 ### ScreenShots
-* Basic QCircularProgressBar
-
-![alt text](screenshots/simple.png "A basic QProgessBar")
-
-* Example of possibilities
-
 ![alt text](screenshots/examples.png "Examples of QProgessBar")
 
 ## Contact
