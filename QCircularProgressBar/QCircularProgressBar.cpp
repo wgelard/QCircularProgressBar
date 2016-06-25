@@ -277,10 +277,6 @@ void QCircularProgressBar::drawPie(QPainter &painter){
     m_cg.setColorAt(0.5, Qt::yellow);
     m_cg.setColorAt(1.0, Qt::green);
 
-    //    m_cg.setColorAt(0.0, Qt::transparent);
-    //    m_cg.setColorAt(0.5, Qt::transparent);
-    //    m_cg.setColorAt(1.0, Qt::transparent);
-
     // Set the color of the circular progress bar
     if(m_enableGradiant){
         painter.setBrush(m_cg);
@@ -291,7 +287,7 @@ void QCircularProgressBar::drawPie(QPainter &painter){
     // Draw the progress bar
     painter.setPen(Qt::NoPen);
 
-    painter.drawPie(QRectF(m_upperLeftCorner, QSize(m_size, m_size)).marginsRemoved(QMarginsF(1,1,1,1)), m_startAngle, -m_spanAngle);
+    painter.drawPie(QRectF(m_upperLeftCorner, QSizeF(m_size, m_size)), m_startAngle, -m_spanAngle);
 
     // Set the shadow effect of the foreground
     QLinearGradient g(QPointF((m_size/2.)+MARGIN,0.),QPointF((m_size/2.)+MARGIN,(m_size/2.)+MARGIN));
@@ -332,7 +328,7 @@ void QCircularProgressBar::drawArc(QPainter &painter){
 
     // Draw the progress bar
     painter.setPen(Qt::NoPen);
-    painter.drawPie(QRectF(m_upperLeftCorner, QSize(m_size, m_size)).marginsRemoved(QMargins(1,1,1,1)), m_startAngle, -m_spanAngle);
+    painter.drawPie(QRectF(m_upperLeftCorner, QSizeF(m_size, m_size)), m_startAngle, -m_spanAngle);
     painter.setPen(m_borderColor.lighter(157));
 
     // Draw the foreground
@@ -424,8 +420,8 @@ void QCircularProgressBar::drawRoundArc(QPainter &painter){
 }
 
 void QCircularProgressBar::drawRoundPie(QPainter &painter){
-    qreal ellispseRaduis = (m_size - m_ratio)/4.;
-    qreal dist = (m_ratio/2 + ellispseRaduis) - 1.;
+    qreal ellispseRaduis = (m_size - m_ratio)/4;
+    qreal dist = (m_ratio/2 + ellispseRaduis);
     QPointF pos;
 
     // Draw last ellipse

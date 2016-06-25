@@ -37,6 +37,7 @@
 //! circular progress bar.
 //!
 
+#include <iostream>
 #include <QtCore/qglobal.h>
 #include <QWidget>
 #include <QPainter>

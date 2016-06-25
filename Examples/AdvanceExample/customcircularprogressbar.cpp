@@ -60,24 +60,20 @@ CustomCircularProgressBar::CustomCircularProgressBar() : QWidget(), m_val(0){
     // Pie type, Round style
     m_progress_6 = new QCircularProgressBar(QCircularProgressBar::type::pie, QCircularProgressBar::style::round);
     // Disable gradient mode and change de default color
-    m_progress_6->setProgressColor("#ffad60");
-    // Change border color
-    m_progress_6->setBorderColor("#eac086");
-    // Change forground color
-    m_progress_6->setForegroundColor("#ffcd94");
-    // Change background color
-    m_progress_6->setBackgrounColor("#dfe3ee");
+    // Disable gradient mode and change de default progress color
+    m_progress_6->setProgressColor("#35a79c");
+    // Change dafault background progress color
+    m_progress_6->setBacgroundProgressColor("#83d0c9");
+    // Disable gradient mode and change de default progress color
+    m_progress_6->setBackgrounColor("#009688"); // If arc type --> forground = background
+    //    m_progress_8->setForegroundColor("#009688"); // If arc type --> background = forground ==> idem
     // Change default text color
-    m_progress_6->setTextColor("#8b9dc3");
+    m_progress_6->setTextColor("#54b2a9");
 
     // Arc type, Flat style
     m_progress_7 = new QCircularProgressBar(QCircularProgressBar::type::arc);
-    // Disable gradient mode and change de default progress color
-    m_progress_7->setProgressColor("#009688");
-    // Change dafault background progress color
-    m_progress_7->setBacgroundProgressColor("#83d0c9");
-    // Change default text color
-    m_progress_7->setTextColor("#54b2a9");
+    // Disable gradient mode
+    m_progress_7->enableGradientColor(false);
 
     // Arc type, Round style
     m_progress_8 = new QCircularProgressBar(QCircularProgressBar::type::arc, QCircularProgressBar::style::round);
