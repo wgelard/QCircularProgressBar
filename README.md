@@ -28,7 +28,7 @@ Include the files from QCircularProgressBar folder into your project:
 ### ScreenShots
 * Basic QCircularProgressBar
 
-![alt text](screenshots/basic.png "A basic QProgessBar")
+![alt text](screenshots/simple.png "A basic QProgessBar")
 
 * Example of possibilities
 
