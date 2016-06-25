@@ -3,7 +3,7 @@
 [ ![License] [license-image] ] [license]
 
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square
-[license]: http://192.168.0.31/Wiwi/Qt_CircularProgressBarWidget/blob/master/LICENSE
+[license]: LICENSE
 
 
 Description
