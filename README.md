@@ -10,24 +10,29 @@ Description
 -----------
 The **QCircularProgressBar** is a QtWidget developped in order to get a new style of QProgressBar, a circular progress bar inspired by [QtKnobs](https://github.com/ashish157/QtKnobs), a Qt and QML based Library/Plugin which provides different types of Knobs.
 
+### Options
+* Two types of QCircularProgressBar: Pie (default) or Arc
+* Two styles: Flat (default) or Round
+* Gradient mode available (by default)
+* Fully customizable (see examples)
+
+## Usage
+
+* As any ordinary class file:
+Include the files from QCircularProgressBar folder into your project: 
+- QCircularProgressBar.h
+- QCircularProgressBar.cpp
+
+* As a shared library (todo)
 
 ### ScreenShots
 * Basic QCircularProgressBar
 
-![alt text](screenshots/basic.PNG "A basic QProgessBar")
+![alt text](screenshots/basic.png "A basic QProgessBar")
 
-* Resizable QCircularProgressBar
+* Example of possibilities
 
-![alt text](screenshots/resizable.PNG "A resizable QProgessBar")
-
-* A simple color QCircularProgressBar
-
-![alt text](screenshots/basicColor.PNG "A simple color QProgessBar")
-
-* A total customizable QProgressBar
-
-![alt text](screenshots/custom.PNG "Wow! That's awfull")
-
+![alt text](screenshots/examples.png "Examples of QProgessBar")
 
 ## Contact
 * Email: gelard.william@gmail.com
